@@ -14,9 +14,7 @@ export default function App() {
   const filteredRecipes = orderedRecipes.filter((recipe) =>
     searchQuery.trim() === ''
       ? true
-      : recipe.ingredients.some((ingredient) =>
-          ingredient.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+      : recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   return (
@@ -24,23 +22,28 @@ export default function App() {
       <header className={styles.header}>
         <div className={styles.headerRow}>
           <h1 className={styles.title}>Recipe Book</h1>
-          <button
-            type="button"
-            className={styles.toggle}
-            onClick={handleToggleOrder}
-          >
+          <button type="button" className={styles.toggle} onClick={handleToggleOrder}>
             Reverse order
           </button>
         </div>
 
-        <input
-          type="text"
-          placeholder="Search by ingredient..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className={styles.search}
-        />
+        <div className={styles.searchWrapper}>
+          <span className={styles.searchIcon}>🔍</span>
+          <input
+            type="text"
+            placeholder="Search recipes..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={styles.search}
+          />
+          {searchQuery && (
+            <button className={styles.clearBtn} onClick={() => setSearchQuery('')}>
+              ✕
+            </button>
+          )}
+        </div>
       </header>
+
       <main className={styles.main}>
         {filteredRecipes.length === 0 ? (
           <p className={styles.noResults}>No recipes found for "{searchQuery}"</p>

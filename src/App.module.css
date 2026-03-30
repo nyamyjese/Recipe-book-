@@ -113,3 +113,39 @@
   margin-top: 40px;
   font-size: 16px;
 }
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.catBtn {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.85rem;
+  border-radius: 50px;
+  border: 1.5px solid #ddd8d0;
+  background: #faf9f7;
+  color: #5c5348;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.catBtn:hover {
+  background: #f0ebe3;
+  border-color: #c9c2b6;
+}
+
+.catActive {
+  background: #2a2620;
+  border-color: #2a2620;
+  color: #fff;
+}
+
+.catActive:hover {
+  background: #3d3830;
+  border-color: #3d3830;
+}

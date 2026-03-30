@@ -8,21 +8,29 @@ export default function App() {
   const [orderedRecipes, setOrderedRecipes] = useState(recipes)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedRecipe, setSelectedRecipe] = useState(null)
+  const [activeCategory, setActiveCategory] = useState('All')
 
   function handleToggleOrder() {
     setOrderedRecipes((prev) => [...prev].reverse())
   }
 
-  const filteredRecipes = orderedRecipes.filter((recipe) =>
-    searchQuery.trim() === ''
+  // Génère les catégories dynamiquement depuis les données
+  const categories = ['All', ...new Set(recipes.map((r) => r.category))]
+
+  const filteredRecipes = orderedRecipes.filter((recipe) => {
+    const matchesSearch = searchQuery.trim() === ''
       ? true
       : recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+
+    const matchesCategory = activeCategory === 'All'
+      ? true
+      : recipe.category === activeCategory
+
+    return matchesSearch && matchesCategory
+  })
 
   return (
     <div className={styles.app}>
-
-      {/* Panel détail */}
       {selectedRecipe && (
         <RecipeDetail
           recipe={selectedRecipe}
@@ -49,6 +57,19 @@ export default function App() {
           {searchQuery && (
             <button className={styles.clearBtn} onClick={() => setSearchQuery('')}>✕</button>
           )}
+        </div>
+
+        {/* Filtres par catégorie */}
+        <div className={styles.categories}>
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              className={`${styles.catBtn} ${activeCategory === cat ? styles.catActive : ''}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
       </header>
 

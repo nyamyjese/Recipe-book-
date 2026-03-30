@@ -5,10 +5,19 @@ import RecipeList from './components/RecipeList/RecipeList.jsx'
 
 export default function App() {
   const [orderedRecipes, setOrderedRecipes] = useState(recipes)
+  const [searchQuery, setSearchQuery] = useState('')
 
   function handleToggleOrder() {
     setOrderedRecipes((prev) => [...prev].reverse())
   }
+
+  const filteredRecipes = orderedRecipes.filter((recipe) =>
+    searchQuery.trim() === ''
+      ? true
+      : recipe.ingredients.some((ingredient) =>
+          ingredient.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+  )
 
   return (
     <div className={styles.app}>
@@ -23,9 +32,21 @@ export default function App() {
             Reverse order
           </button>
         </div>
+
+        <input
+          type="text"
+          placeholder="Search by ingredient..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className={styles.search}
+        />
       </header>
       <main className={styles.main}>
-        <RecipeList recipes={orderedRecipes} />
+        {filteredRecipes.length === 0 ? (
+          <p className={styles.noResults}>No recipes found for "{searchQuery}"</p>
+        ) : (
+          <RecipeList recipes={filteredRecipes} />
+        )}
       </main>
     </div>
   )

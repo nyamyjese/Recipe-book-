@@ -1,15 +1,16 @@
 import styles from './RecipeCard.module.css'
 
-export default function RecipeCard({ recipe, onSelect, pinned, onTogglePin }) {
+export default function RecipeCard({ recipe, onSelect, pinned, onTogglePin, index }) {
   return (
     <article
       className={`${styles.card} ${pinned ? styles.pinned : ''}`}
       onClick={() => onSelect(recipe)}
+      style={{ animationDelay: `${index * 0.07}s` }}
     >
       <div className={styles.imageWrapper}>
         <img className={styles.image} src={recipe.image} alt={recipe.name} />
         <span className={styles.duration}>{recipe.duration} min</span>
-        {pinned && <span className={styles.pinnedBadge}>📌</span>}
+        {pinned && <span className={styles.pinnedBadge}>📌 Pinned</span>}
       </div>
       <div className={styles.body}>
         <span className={styles.badge}>{recipe.category}</span>

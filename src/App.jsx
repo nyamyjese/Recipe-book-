@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 import recipes from './data/recipes.json'
 import styles from './App.module.css'
 import RecipeList from './components/RecipeList/RecipeList.jsx'
@@ -9,6 +9,19 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedRecipe, setSelectedRecipe] = useState(null)
   const [activeCategory, setActiveCategory] = useState('All')
+  const [showTop, setShowTop] = useState(false)
+
+  useEffect(() => {
+  function handleScroll() {
+    setShowTop(window.scrollY > 300)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   function handleToggleOrder() {
     setOrderedRecipes((prev) => [...prev].reverse())
@@ -80,6 +93,13 @@ export default function App() {
           <RecipeList recipes={filteredRecipes} onSelect={setSelectedRecipe} />
         )}
       </main>
+
+      {/* Bouton back to top */}
+      {showTop && (
+        <button className={styles.backToTop} onClick={scrollToTop}>
+          ↑
+        </button>
+      )}
     </div>
   )
 }

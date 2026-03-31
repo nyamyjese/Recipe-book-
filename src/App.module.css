@@ -149,3 +149,25 @@
   background: #3d3830;
   border-color: #3d3830;
 }
+
+.backToTop {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #2a2620;
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
+  transition: background 0.15s, transform 0.15s;
+  z-index: 50;
+}
+
+.backToTop:hover {
+  background: #3d3830;
+  transform: translateY(-2px);
+}

@@ -1,4 +1,4 @@
-import { useState , useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import recipes from './data/recipes.json'
 import styles from './App.module.css'
 import RecipeList from './components/RecipeList/RecipeList.jsx'
@@ -9,11 +9,12 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedRecipe, setSelectedRecipe] = useState(null)
   const [activeCategory, setActiveCategory] = useState('All')
+  const [pinnedIds, setPinnedIds] = useState([])
   const [showTop, setShowTop] = useState(false)
 
   useEffect(() => {
-  function handleScroll() {
-    setShowTop(window.scrollY > 300)
+    function handleScroll() {
+      setShowTop(window.scrollY > 300)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -27,20 +28,29 @@ export default function App() {
     setOrderedRecipes((prev) => [...prev].reverse())
   }
 
-  // Génère les catégories dynamiquement depuis les données
+  function handleTogglePin(id) {
+    setPinnedIds((prev) =>
+      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]
+    )
+  }
+
   const categories = ['All', ...new Set(recipes.map((r) => r.category))]
 
   const filteredRecipes = orderedRecipes.filter((recipe) => {
     const matchesSearch = searchQuery.trim() === ''
       ? true
       : recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
-
     const matchesCategory = activeCategory === 'All'
       ? true
       : recipe.category === activeCategory
-
     return matchesSearch && matchesCategory
   })
+
+  // Pinnées en haut, le reste après
+  const sortedRecipes = [
+    ...filteredRecipes.filter((r) => pinnedIds.includes(r.id)),
+    ...filteredRecipes.filter((r) => !pinnedIds.includes(r.id)),
+  ]
 
   return (
     <div className={styles.app}>
@@ -71,8 +81,6 @@ export default function App() {
             <button className={styles.clearBtn} onClick={() => setSearchQuery('')}>✕</button>
           )}
         </div>
-
-        {/* Filtres par catégorie */}
         <div className={styles.categories}>
           {categories.map((cat) => (
             <button
@@ -87,18 +95,20 @@ export default function App() {
       </header>
 
       <main className={styles.main}>
-        {filteredRecipes.length === 0 ? (
+        {sortedRecipes.length === 0 ? (
           <p className={styles.noResults}>No recipes found for "{searchQuery}"</p>
         ) : (
-          <RecipeList recipes={filteredRecipes} onSelect={setSelectedRecipe} />
+          <RecipeList
+            recipes={sortedRecipes}
+            onSelect={setSelectedRecipe}
+            pinnedIds={pinnedIds}
+            onTogglePin={handleTogglePin}
+          />
         )}
       </main>
 
-      {/* Bouton back to top */}
       {showTop && (
-        <button className={styles.backToTop} onClick={scrollToTop}>
-          ↑
-        </button>
+        <button className={styles.backToTop} onClick={scrollToTop}>↑</button>
       )}
     </div>
   )

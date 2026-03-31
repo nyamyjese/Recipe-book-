@@ -92,3 +92,15 @@
   border-color: #2d6a4f;
   color: #2d6a4f;
 }
+
+.pinnedBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgb(0 0 0 / 0.55);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+}

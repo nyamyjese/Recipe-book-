@@ -171,3 +171,22 @@
   background: #3d3830;
   transform: translateY(-2px);
 }
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.addBtn {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  background: #2a2620;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.addBtn:hover { background: #3d3830; }

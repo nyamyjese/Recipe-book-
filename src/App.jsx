@@ -46,7 +46,6 @@ export default function App() {
     return matchesSearch && matchesCategory
   })
 
-  // Pinnées en haut, le reste après
   const sortedRecipes = [
     ...filteredRecipes.filter((r) => pinnedIds.includes(r.id)),
     ...filteredRecipes.filter((r) => !pinnedIds.includes(r.id)),
@@ -64,10 +63,16 @@ export default function App() {
       <header className={styles.header}>
         <div className={styles.headerRow}>
           <h1 className={styles.title}>Recipe Book</h1>
-          <button type="button" className={styles.toggle} onClick={handleToggleOrder}>
-            Reverse order
-          </button>
+
+          {/* Les deux boutons côte à côte */}
+          <div className={styles.headerActions}>
+            <a href="/add" className={styles.addBtn}>+ Add Recipe</a>
+            <button type="button" className={styles.toggle} onClick={handleToggleOrder}>
+              Reverse order
+            </button>
+          </div>
         </div>
+
         <div className={styles.searchWrapper}>
           <span className={styles.searchIcon}>🔍</span>
           <input
@@ -81,6 +86,7 @@ export default function App() {
             <button className={styles.clearBtn} onClick={() => setSearchQuery('')}>✕</button>
           )}
         </div>
+
         <div className={styles.categories}>
           {categories.map((cat) => (
             <button
@@ -113,4 +119,3 @@ export default function App() {
     </div>
   )
 }
-// Passant maintenant en Next.js

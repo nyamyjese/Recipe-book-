@@ -5,12 +5,14 @@ import './index.css'
 import App from './App.jsx'
 import NotFound from './pages/NotFound.jsx'
 import AddRecipe from './pages/AddRecipe.jsx'
+import RecipeDetail from './pages/RecipeDetail.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/recipe/:id" element={<RecipeDetail />} />
         <Route path="/add" element={<AddRecipe />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

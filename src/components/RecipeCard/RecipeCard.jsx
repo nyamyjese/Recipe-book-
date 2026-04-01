@@ -1,10 +1,13 @@
+import { useNavigate } from 'react-router-dom'
 import styles from './RecipeCard.module.css'
 
 export default function RecipeCard({ recipe, onSelect, pinned, onTogglePin, index }) {
+  const navigate = useNavigate()
+
   return (
     <article
       className={`${styles.card} ${pinned ? styles.pinned : ''}`}
-      onClick={() => onSelect(recipe)}
+      onClick={() => navigate(`/recipe/${recipe.id}`)}
       style={{ animationDelay: `${index * 0.07}s` }}
     >
       <div className={styles.imageWrapper}>

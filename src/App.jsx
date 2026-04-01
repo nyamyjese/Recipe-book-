@@ -97,7 +97,6 @@ export default function App() {
         ) : (
           <RecipeList
             recipes={sortedRecipes}
-            onSelect={setSelectedRecipe}
             pinnedIds={pinnedIds}
             onTogglePin={handleTogglePin}
           />

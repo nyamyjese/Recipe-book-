@@ -55,7 +55,6 @@ export default function App() {
         <div className={styles.headerRow}>
           <h1 className={styles.title}>Recipe Book</h1>
 
-          {/* Les deux boutons côte à côte */}
           <div className={styles.headerActions}>
             <a href="/add" className={styles.addBtn}>+ Add Recipe</a>
             <button type="button" className={styles.toggle} onClick={handleToggleOrder}>

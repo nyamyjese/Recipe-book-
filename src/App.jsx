@@ -2,12 +2,10 @@ import { useState, useEffect } from 'react'
 import recipes from './data/recipes.json'
 import styles from './App.module.css'
 import RecipeList from './components/RecipeList/RecipeList.jsx'
-import RecipeDetail from './components/RecipeDetail/RecipeDetail.jsx'
 
 export default function App() {
   const [orderedRecipes, setOrderedRecipes] = useState(recipes)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedRecipe, setSelectedRecipe] = useState(null)
   const [activeCategory, setActiveCategory] = useState('All')
   const [pinnedIds, setPinnedIds] = useState([])
   const [showTop, setShowTop] = useState(false)
@@ -53,13 +51,6 @@ export default function App() {
 
   return (
     <div className={styles.app}>
-      {selectedRecipe && (
-        <RecipeDetail
-          recipe={selectedRecipe}
-          onClose={() => setSelectedRecipe(null)}
-        />
-      )}
-
       <header className={styles.header}>
         <div className={styles.headerRow}>
           <h1 className={styles.title}>Recipe Book</h1>
